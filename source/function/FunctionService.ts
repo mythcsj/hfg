@@ -3,6 +3,7 @@ import {
     FunctionGraphClient,
     InvokeFunctionRequest
 } from '@huaweicloud/huaweicloud-sdk-functiongraph';
+import { Region } from '../common/FnConst';
 
 const {
     HW_CLOUD_AK: ak,
@@ -12,9 +13,9 @@ const {
 } = process.env;
 
 export function getHWFunction(
-    regionId: string,
     functionName: string,
-    data: any
+    data: any,
+    regionId: string = Region.GUI_YANG_1
 ) {
     const client = HWFunctionClient.getInstance();
 

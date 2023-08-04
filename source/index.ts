@@ -8,6 +8,7 @@ import { useKoaServer } from 'routing-controllers';
 
 import { swagger, mocker, router, UserController } from './controller';
 import dataSource, { isProduct } from './model';
+import { getAuthorizationChecker } from './common/CommonUtils';
 
 const { PORT = 8080, APP_SECRET } = process.env;
 
@@ -22,8 +23,9 @@ if (!isProduct) app.use(mocker());
 useKoaServer(app, {
     ...router,
     cors: true,
-    authorizationChecker: action => !!UserController.getSession(action),
-    currentUserChecker: UserController.getSession
+    authorizationChecker: async action =>
+        !!(await getAuthorizationChecker(action)),
+    currentUserChecker: getAuthorizationChecker
 });
 
 console.time('Server boot');

@@ -11,5 +11,6 @@ export enum Region {
 
 export enum FunctionName {
     SIGN = 'fn_sign',
-    VERIFY = 'fn_verify'
+    VERIFY = 'fn_verify',
+    ENV = 'fn_env'
 }
