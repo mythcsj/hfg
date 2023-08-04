@@ -5,17 +5,17 @@ import {
     JsonController,
     Param
 } from 'routing-controllers';
-import { getBearerToken, getEnv } from '../common/CommonUtils';
+import { getBearerToken } from '../common/CommonUtils';
+import { getSecretKey } from '../common/EnvService';
 import { FunctionName } from '../common/FnConst';
-import { getHWFunction } from '../function/FunctionService';
+import { InvokeFunction } from '../function/FunctionService';
 
 @JsonController('/fn')
 export class FnController {
     @Get('/sign')
     async sign() {
-        const secretKey = await getEnv('AUTH_SECRET_KEY');
-
-        const res = await getHWFunction(FunctionName.SIGN, {
+        const secretKey = await getSecretKey();
+        const res = await InvokeFunction(FunctionName.SIGN, {
             secretKey,
             userInfo: { name: 'mythcsj' }
         });
@@ -25,10 +25,10 @@ export class FnController {
     @Get('/verify')
     @Authorized()
     async verify(@HeaderParam('authorization') authorization: string) {
-        const token = getBearerToken(authorization);
-        const secretKey = await getEnv('AUTH_SECRET_KEY');
+        const token = await getBearerToken(authorization);
+        const secretKey = await getSecretKey();
 
-        return getHWFunction(FunctionName.VERIFY, {
+        return InvokeFunction(FunctionName.VERIFY, {
             secretKey,
             token
         });
@@ -36,6 +36,6 @@ export class FnController {
 
     @Get('/env/:constKey')
     async env(@Param('constKey') constKey: string) {
-        return getHWFunction(FunctionName.ENV, { constKey });
+        return InvokeFunction(FunctionName.ENV, { constKey });
     }
 }

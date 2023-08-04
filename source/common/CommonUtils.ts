@@ -1,7 +1,6 @@
 import { verify } from 'jsonwebtoken';
 import { Action } from 'routing-controllers';
-import { getHWFunction } from '../function/FunctionService';
-import { FunctionName, Region } from './FnConst';
+import { getSecretKey } from './EnvService';
 
 export async function getAuthorizationChecker(action: Action) {
     const authorization: string = action.request.headers['authorization'];
@@ -13,23 +12,14 @@ export async function getAuthorizationChecker(action: Action) {
     try {
         if (type != 'Bearer') throw Error(`the authorization type is 'bearer'`);
 
-        const AUTH_SECRET_KEY = await getEnv('AUTH_SECRET_KEY');
+        const secretKey = await getSecretKey();
 
-        const obj = verify(token, AUTH_SECRET_KEY);
+        const obj = verify(token, secretKey);
 
         if (obj) return obj;
     } catch {
         return;
     }
-}
-
-export async function getEnv(
-    constKey: string,
-    regionId: string = Region.GUI_YANG_1
-) {
-    return (await getHWFunction(FunctionName.ENV, { constKey }, regionId))[
-        'data'
-    ] as string;
 }
 
 export async function getBearerToken(authorization: string) {
