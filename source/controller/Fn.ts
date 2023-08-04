@@ -8,14 +8,14 @@ import {
 import { getBearerToken } from '../common/CommonUtils';
 import { getSecretKey } from '../common/EnvService';
 import { FunctionName } from '../common/FnConst';
-import { InvokeFunction } from '../function/FunctionService';
+import { invokeFunction } from '../function/FunctionService';
 
 @JsonController('/fn')
 export class FnController {
     @Get('/sign')
     async sign() {
         const secretKey = await getSecretKey();
-        const res = await InvokeFunction(FunctionName.SIGN, {
+        const res = await invokeFunction(FunctionName.SIGN, {
             secretKey,
             userInfo: { name: 'mythcsj' }
         });
@@ -28,7 +28,7 @@ export class FnController {
         const token = await getBearerToken(authorization);
         const secretKey = await getSecretKey();
 
-        return InvokeFunction(FunctionName.VERIFY, {
+        return invokeFunction(FunctionName.VERIFY, {
             secretKey,
             token
         });
@@ -36,6 +36,6 @@ export class FnController {
 
     @Get('/env/:constKey')
     async env(@Param('constKey') constKey: string) {
-        return InvokeFunction(FunctionName.ENV, { constKey });
+        return invokeFunction(FunctionName.ENV, { constKey });
     }
 }

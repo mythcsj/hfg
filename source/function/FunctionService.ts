@@ -12,7 +12,7 @@ const {
     HW_CLOUD_PROJECT_ID: projectId
 } = process.env;
 
-export function InvokeFunction(
+export function invokeFunction(
     functionName: string,
     param: any,
     regionId: string = Region.GUI_YANG_1

@@ -116,6 +116,7 @@ export class UserController {
     }
 
     @Get()
+    @Authorized()
     @ResponseSchema(UserListChunk)
     async getList(@QueryParams() { pageSize, pageIndex }: UserFilter) {
         const [list, count] = await this.store.findAndCount({
