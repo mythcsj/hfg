@@ -14,14 +14,14 @@ const {
 
 export function InvokeFunction(
     functionName: string,
-    data: any,
+    param: any,
     regionId: string = Region.GUI_YANG_1
 ) {
     const client = HWFunctionClient.getInstance();
 
     const request = new InvokeFunctionRequest();
     request.functionUrn = `urn:fss:${regionId}:${projectId}:function:default:${functionName}:latest`;
-    request.withBody({ data });
+    request.withBody({ param });
 
     return client.invokeFunction(request);
 }
