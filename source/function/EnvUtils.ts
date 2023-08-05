@@ -1,5 +1,5 @@
-import { invokeFunction } from '../function/FunctionService';
-import { FunctionName, Region } from './FnConst';
+import { invokeFunction } from './FunctionUtils';
+import { FunctionName, Region } from '../common/FnConst';
 
 const { SECRET_KEY: sk } = process.env;
 

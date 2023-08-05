@@ -1,6 +1,7 @@
-import { verify } from 'jsonwebtoken';
 import { Action } from 'routing-controllers';
-import { getSecretKey } from './EnvService';
+import { invokeFunction } from '../function/FunctionUtils';
+import { getSecretKey } from '../function/EnvUtils';
+import { FunctionName } from './FnConst';
 
 export async function getAuthorizationChecker(action: Action) {
     const authorization: string = action.request.headers['authorization'];
@@ -14,9 +15,12 @@ export async function getAuthorizationChecker(action: Action) {
 
         const secretKey = await getSecretKey();
 
-        const obj = verify(token, secretKey);
+        const obj = await invokeFunction(FunctionName.VERIFY, {
+            secretKey,
+            token
+        });
 
-        if (obj) return obj;
+        if (obj) return obj['data'];
     } catch {
         return;
     }
