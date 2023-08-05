@@ -1,21 +1,17 @@
-FROM node:18-slim
-
+FROM node:18-slim as build
 USER root
-
 RUN npm rm yarn -g
 RUN npm i pnpm -g
-
-RUN mkdir /home/node/app
-WORKDIR /home/node/app
-
-COPY package.json pnpm-lock.yaml /home/node/app/
-RUN pnpm i --frozen-lockfile
-
-COPY . /home/node/app
+WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install
+COPY . ./
 RUN pnpm build
 
-RUN pnpm prune --prod || true \
-    pnpm store prune
-
+FROM node:18-slim as run
+WORKDIR /app
+COPY --from=build /app/package.json ./
+COPY --from=build /app/node_modules ./node_modules/
+COPY --from=build /app/dist ./dist/
 EXPOSE 8080
-CMD ["npm", "start"]
+CMD [ "node", "./dist" ]
