@@ -1,6 +1,6 @@
 import { Action } from 'routing-controllers';
+import { EnvKey, getEnvValue } from '../function/EnvUtils';
 import { invokeFunction } from '../function/FunctionUtils';
-import { getSecretKey } from '../function/EnvUtils';
 import { FunctionName } from './FnConst';
 
 export async function getAuthorizationChecker(action: Action) {
@@ -13,7 +13,7 @@ export async function getAuthorizationChecker(action: Action) {
     try {
         if (type != 'Bearer') throw Error(`the authorization type is 'bearer'`);
 
-        const secretKey = await getSecretKey();
+        const secretKey = await getEnvValue(EnvKey.SECRET_KEY);
 
         const obj = await invokeFunction(FunctionName.VERIFY, {
             secretKey,

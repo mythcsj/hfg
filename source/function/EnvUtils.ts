@@ -3,15 +3,30 @@ import { FunctionName, Region } from '../common/FnConst';
 
 const { SECRET_KEY: sk } = process.env;
 
+export enum EnvKey {
+    SECRET_KEY = 'sk'
+}
+
+export const EnvObj = {
+    [EnvKey.SECRET_KEY]: {
+        env: sk,
+        errorMesaage: 'please configure the environment [SECRET_KEY]'
+    }
+};
+
 export async function getEnv(
     constKey: string,
     regionId: string = Region.GUI_YANG_1
 ) {
-    return (await invokeFunction(FunctionName.ENV, { constKey }, regionId))[
-        'data'
-    ] as string;
+    const res = await invokeFunction(FunctionName.ENV, { constKey }, regionId);
+    return res['data'] as string;
 }
 
-export function getSecretKey() {
-    return getEnv(sk);
+export async function getEnvValue(
+    envKey: EnvKey,
+    regionId: string = Region.GUI_YANG_1
+) {
+    const { env, errorMesaage } = EnvObj[envKey];
+    if (!env) throw new Error(errorMesaage);
+    return getEnv(env, regionId);
 }
