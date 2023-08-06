@@ -5,21 +5,22 @@ import {
     JsonController,
     Param
 } from 'routing-controllers';
-import { getBearerToken } from '../common/CommonUtils';
-import { getEnv } from '../function/EnvUtils';
+import { getToken } from '../common/CommonUtils';
+import { EnvNumberKey, getEnv, getEnvNumberValue } from '../function/EnvUtils';
 import { sign, verify } from '../services/FunctionService';
 
 @JsonController('/fn')
 export class FnController {
     @Get('/sign')
     async sign() {
+        console.log(await getEnvNumberValue(EnvNumberKey.PAGE_NUM));
         return sign({ name: 'mythcsj' });
     }
 
     @Get('/verify')
     @Authorized()
     async verify(@HeaderParam('authorization') authorization: string) {
-        const token = await getBearerToken(authorization);
+        const token = getToken(authorization);
         return verify(token);
     }
 
