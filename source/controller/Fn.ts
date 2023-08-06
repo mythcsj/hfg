@@ -13,7 +13,6 @@ import { sign, verify } from '../services/FunctionService';
 export class FnController {
     @Get('/sign')
     async sign() {
-        console.log(await getEnvNumberValue(EnvNumberKey.PAGE_NUM));
         return sign({ name: 'mythcsj' });
     }
 
