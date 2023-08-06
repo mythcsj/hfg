@@ -9,7 +9,7 @@ export enum Region {
     GUI_YANG_1 = 'cn-southwest-2'
 }
 
-export enum FunctionName {
+export enum HuaweiCloudFunctionName {
     SIGN = 'fn_sign',
     VERIFY = 'fn_verify',
     ENV = 'fn_env'
