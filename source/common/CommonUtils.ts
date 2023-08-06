@@ -1,7 +1,7 @@
 import { Action } from 'routing-controllers';
 import { EnvKey, getEnvValue } from '../function/EnvUtils';
 import { invokeFunction } from '../function/FunctionUtils';
-import { HuaweiCloudFunctionName } from './FnConst';
+import { HCFunction } from './FnConst';
 
 export async function getAuthorizationChecker(action: Action) {
     const authorization: string = action.request.headers['authorization'];
@@ -15,7 +15,7 @@ export async function getAuthorizationChecker(action: Action) {
 
         const secretKey = await getEnvValue(EnvKey.SECRET_KEY);
 
-        const obj = await invokeFunction(HuaweiCloudFunctionName.VERIFY, {
+        const obj = await invokeFunction(HCFunction.VERIFY, {
             secretKey,
             token
         });

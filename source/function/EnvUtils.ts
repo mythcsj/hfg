@@ -1,5 +1,5 @@
 import { invokeFunction } from './FunctionUtils';
-import { HuaweiCloudFunctionName, Region } from '../common/FnConst';
+import { HCFunction, Region } from '../common/FnConst';
 
 const { SECRET_KEY: sk } = process.env;
 
@@ -18,11 +18,7 @@ export async function getEnv(
     constKey: string,
     regionId: string = Region.GUI_YANG_1
 ) {
-    const res = await invokeFunction(
-        HuaweiCloudFunctionName.ENV,
-        { constKey },
-        regionId
-    );
+    const res = await invokeFunction(HCFunction.ENV, { constKey }, regionId);
     return res['data'] as string;
 }
 
