@@ -1,5 +1,5 @@
 import { invokeFunction } from './FunctionUtils';
-import { HCFunction, Region } from '../common/FnConst';
+import { HCFunction, Region } from './FnConst';
 
 const { SECRET_KEY: sk, PAGE_NUM: pageNum } = process.env;
 

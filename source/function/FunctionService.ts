@@ -1,6 +1,6 @@
 import { HCFunction } from '../common/FnConst';
-import { EnvStringKey, getEnvStringValue } from '../function/EnvUtils';
-import { invokeFunction } from '../function/FunctionUtils';
+import { EnvStringKey, getEnvStringValue } from '../common/EnvUtils';
+import { invokeFunction } from '../common/FunctionUtils';
 
 export async function sign(userInfo: any) {
     const secretKey = await getEnvStringValue(EnvStringKey.SECRET_KEY);

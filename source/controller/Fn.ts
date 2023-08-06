@@ -6,8 +6,8 @@ import {
     Param
 } from 'routing-controllers';
 import { getToken } from '../common/CommonUtils';
-import { getEnv } from '../function/EnvUtils';
-import { sign, verify } from '../services/FunctionService';
+import { getEnv } from '../common/EnvUtils';
+import { sign, verify } from '../function/FunctionService';
 
 @JsonController('/fn')
 export class FnController {

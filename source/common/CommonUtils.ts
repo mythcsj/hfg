@@ -1,5 +1,5 @@
 import { Action } from 'routing-controllers';
-import { EnvStringKey, getEnvStringValue } from '../function/EnvUtils';
+import { EnvStringKey, getEnvStringValue } from './EnvUtils';
 import { invokeFunction } from '../function/FunctionUtils';
 import { HCFunction } from './FnConst';
 
