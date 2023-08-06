@@ -11,14 +11,8 @@ export enum EnvNumberKey {
 }
 
 export const EnvObj = {
-    [EnvStringKey.SECRET_KEY]: {
-        env: sk,
-        errorMesaage: 'please configure the environment [SECRET_KEY]'
-    },
-    [EnvNumberKey.PAGE_NUM]: {
-        env: pageNum,
-        errorMesaage: 'please configure the environment [PAGE_NUM]'
-    }
+    [EnvStringKey.SECRET_KEY]: { env: sk },
+    [EnvNumberKey.PAGE_NUM]: { env: pageNum }
 };
 
 export async function getEnv(
@@ -33,8 +27,8 @@ export async function getEnvBasicValue(
     key: string,
     regionId: string = Region.GUI_YANG_1
 ) {
-    const { env, errorMesaage } = EnvObj[key];
-    if (!env) throw new Error(errorMesaage);
+    const { env } = EnvObj[key];
+    if (!env) throw new Error(`please configure the environment [${key}]`);
     return await getEnv(env, regionId);
 }
 
