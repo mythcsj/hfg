@@ -6,13 +6,20 @@ import {
     Param
 } from 'routing-controllers';
 import { getToken } from '../common/CommonUtils';
-import { getEnv } from '../common/EnvUtils';
+import {
+    EnvMap,
+    EnvStringKey,
+    getEnv,
+    getEnvStringValue
+} from '../common/EnvUtils';
 import { sign, verify } from '../function/FunctionService';
 
 @JsonController('/fn')
 export class FnController {
     @Get('/sign')
     async sign() {
+        console.log(getEnvStringValue(EnvStringKey.SECRET_KEY));
+        console.log(EnvMap.getEnv('PAGE_SIZE'));
         return sign({ name: 'mythcsj' });
     }
 

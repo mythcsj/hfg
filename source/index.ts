@@ -1,14 +1,15 @@
-import 'reflect-metadata';
 import 'dotenv/config';
+import 'reflect-metadata';
 
 import Koa from 'koa';
-import KoaLogger from 'koa-logger';
 import jwt from 'koa-jwt';
+import KoaLogger from 'koa-logger';
 import { useKoaServer } from 'routing-controllers';
 
-import { swagger, mocker, router, UserController } from './controller';
-import dataSource, { isProduct } from './model';
 import { getAuthorizationChecker } from './common/CommonUtils';
+import { mocker, router, swagger } from './controller';
+import dataSource, { isProduct } from './model';
+import { EnvMap } from './common/EnvUtils';
 
 const { PORT = 8080, APP_SECRET } = process.env;
 
@@ -32,6 +33,8 @@ console.time('Server boot');
 
 dataSource.initialize().then(() =>
     app.listen(PORT, () => {
+        new EnvMap();
+
         console.log(`
 HTTP served at ${HOST}
 Swagger API served at ${HOST}/docs/
