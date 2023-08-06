@@ -1,6 +1,6 @@
 import { Action } from 'routing-controllers';
 import { EnvStringKey, getEnvStringValue } from './EnvUtils';
-import { invokeFunction } from '../function/FunctionUtils';
+import { invokeFunction } from '../common/FunctionUtils';
 import { HCFunction } from './FnConst';
 
 export async function getAuthorizationChecker(action: Action) {
