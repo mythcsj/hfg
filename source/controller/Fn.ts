@@ -6,7 +6,7 @@ import {
     Param
 } from 'routing-controllers';
 import { getToken } from '../common/CommonUtils';
-import { EnvNumberKey, getEnv, getEnvNumberValue } from '../function/EnvUtils';
+import { getEnv } from '../function/EnvUtils';
 import { sign, verify } from '../services/FunctionService';
 
 @JsonController('/fn')
