@@ -17,7 +17,7 @@ export async function getAuthorizationChecker(action: Action) {
 
 export function getToken(authorization: string) {
     const [type, token] = authorization.split(/\s+/);
-    if (type != 'Bearer') throw Error(`the authorization of type is 'bearer'`);
+    if (type != 'Bearer') throw Error(`the authorization of type is 'Bearer'`);
     if (!token) throw Error('the value of [token] is empty');
     return token;
 }
